@@ -1,5 +1,4 @@
-This is my first Blazor Project, build on class. At the moment, Im on the 4th Semester Of the Software Engineer Career.
-The project includes the following sections:
+This is my first Blazor project, built as part of a class assignment. Currently, I am in the 4th semester of my Software Engineering degree. The project includes the following sections:
 
 - **Home Page**
 - **Click Counter**
