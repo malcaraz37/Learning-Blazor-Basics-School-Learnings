@@ -1,0 +1,126 @@
+﻿@page "/ciclos"
+@rendermode InteractiveServer
+
+<h3>Calificaciones Aleatorias</h3>
+
+<div class="row my-3">
+    <label for="cantidad" class="form-label">Número de calificaciones a generar:</label>
+    <input type="number" id="cantidad" class="form-control" @bind="cantidadCalificaciones" min="1" />
+</div>
+
+<div class="row my-3">
+    <label for="txtDato" class="form-label">Ingrese número de posición:</label>
+    <input type="number" id="txtDato" class="form-control" @bind="_dato" min="1" />
+</div>
+
+<button class="btn btn-success mb-3" @onclick="Ordenar">Ordenar menor a mayor</button>
+<button class="btn btn-success mb-3" @onclick="Buscar">Buscar la posicion que gustes</button>
+<button class="btn btn-success mb-3" @onclick="Generar">Generar Calificaciones</button>
+<button class="btn btn-success mb-3" @onclick="Eliminar">Eliminar el 9</button>
+
+@if (calificaciones.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Calificación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < calificaciones.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@calificaciones[i].ToString("0.0")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Calificación más alta: @alta.ToString("0.0")</h4>
+    <h4>Calificación más baja: @baja.ToString("0.0")</h4>
+    <h4>Promedio de ambas: @promedio.ToString("0.0")</h4>
+    <h4>Resultado de búsqueda: @_salida</h4>
+}
+
+@code {
+    private List<double> calificaciones = new();
+    private double alta;
+    private double baja;
+    private double promedio;
+    private int cantidadCalificaciones = 10;
+    private int _dato;
+    private string _salida = "";
+
+
+
+    private void Buscar()
+    {
+        if (_dato > 0 && _dato <= calificaciones.Count)
+        {
+            _salida = $"La calificación en la posición {_dato} es: {calificaciones[_dato - 1]:0.0}";
+        }
+        else
+        {
+            _salida = "Número fuera de rango";
+        }
+
+        calificaciones.Insert(9, _dato);
+    }
+
+    private void Ordenar()
+    {
+        calificaciones.Sort();
+
+    }
+
+
+    private void Eliminar()
+    {
+        calificaciones.RemoveAt(8);
+    }
+
+    private void Generar()
+    {
+        var random = new Random();
+        calificaciones.Clear();
+
+        for (int i = 0; i < cantidadCalificaciones; i++)
+        {
+            double calificacion = random.Next(0, 11);
+            calificaciones.Add(calificacion);
+        }
+
+
+
+        alta = calificaciones.Max();
+        baja = calificaciones.Min();
+        promedio = (alta + baja) / 2.0;
+    }
+}
+
+
+@*         //         _salida = "";
+//         for (int i = 1; i <= _limite; i++)
+//         {
+//             if (i == 7)
+//             {
+//                 break; // Detiene el bucle cuando i es 7
+//              // continue; // El bucle omite la iteración donde i == 7, pero sigue ejecutándose con los valores siguientes
+//             }
+//             _salida += i.ToString() + "<br>"; // Agrega cada número a la salida
+//         }
+//     }
+// }
+
+    int i = 1;
+         _salida = "";
+
+         while (i <= _limite)
+         {
+             _salida += i.ToString() + "<br>";
+             i++;
+         }
+     }
+ } *@

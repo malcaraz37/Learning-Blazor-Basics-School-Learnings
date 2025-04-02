@@ -1,0 +1,44 @@
+﻿@page "/Cambio"
+@rendermode InteractiveServer
+<h3>Cambio de Moneda</h3>
+<div>
+	<label for="Pesos">Cantidad en Pesos Mexicanos:</label>
+	<br />
+	<input type="number" id="Pesos" class="form-control" @bind = "_pesos"/>
+</div>
+
+<br />
+<button class="btn btn-primary" @onclick="Convertir">Convertir</button>
+
+<div class="mt-3">
+	<label for="Dolares">Dólares</label>
+	<input type="text" id="Dolares" class="form-control" value="@_dolares.ToString("0.000")" readonly />
+
+	<label for="Euros">Euros</label>
+	<input type="text" id="Euros" class="form-control" value="@_euros.ToString("0.000")" readonly />
+
+	<label for="Libras">Libras</label>
+	<input type="text" id="Libras" class="form-control" value="@_libras.ToString("0.000")" readonly />
+</div>
+
+
+
+@code {
+	private decimal _pesos;
+	private decimal _dolares;
+	private decimal _euros;
+	private decimal _libras;
+
+	private decimal valorDolar = 20.39M;
+	private decimal valorEuro = 22.07M;
+	private decimal valorLibra = 26.39M;
+
+	private void Convertir() {
+		_dolares = _pesos / valorDolar;
+		_euros = _pesos / valorEuro;
+		_libras = _pesos / valorLibra;
+		StateHasChanged();
+	}
+}
+
+

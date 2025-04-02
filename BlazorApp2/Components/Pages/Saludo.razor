@@ -1,0 +1,52 @@
+﻿@page "/saludo"
+@rendermode InteractiveServer
+
+<h1>Hola @_letrero</h1>
+
+@if (_validado)
+{
+    <div class="alert @((_edad >= 18) ? "alert-success" : "alert-danger")">
+        @_letreroEdad
+    </div>
+}
+
+<div class="mb-3">
+    <label for="nombrecompleto" class="form-label">Nombre</label>
+    <input type="text" class="form-control" id="nombrecompleto" aria-describedby="nombrecompleto" @bind="_nombre">
+    <div id="nombrecompleto" class="form-text">Ingresa tu nombre completo.</div>
+</div>
+
+<button class="btn btn-success" @onclick="Saludar">Click y te saludo</button>
+
+<div class="mb-3">
+    <label for="edadCompleta" class="form-label">Edad</label>
+    <input type="number" class="form-control" id="edadCompleta" aria-describedby="edadCompleta" @bind="_edad">
+    <div id="edadCompleta" class="form-text">Ingresa tu edad.</div>
+</div>
+
+<button class="btn btn-success" @onclick="Validar">Validar</button>
+
+@code {
+    private string _nombre = "";
+    private string? _letrero, _letreroEdad;
+    private int _edad = 0;
+    private bool _validado = false;
+
+    private void Saludar()
+    {
+        _letrero = _nombre;
+    }
+
+    private void Validar()
+    {
+        _validado = true;
+        if (_edad >= 18)
+        {
+            _letreroEdad = "Eres MAYOR DE EDAD";
+        }
+        else
+        {
+            _letreroEdad = "Eres MENOR DE EDAD";
+        }
+    }
+}
